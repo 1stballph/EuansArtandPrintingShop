@@ -1,0 +1,16 @@
+{
+  "name": "Euan's Art and Printing Shop",
+  "short_name": "Euan's Printing",
+  "description": "Full-sublimation jerseys, shirts, uniforms, DTF, mug & tarpaulin printing, heat press, and tailoring.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff7d1",
+  "theme_color": "#1a1a1a",
+  "categories": ["shopping", "business"],
+  "icons": [
+    { "src": "icon.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

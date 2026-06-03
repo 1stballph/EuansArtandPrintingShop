@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Euan's Art and Printing Shop</title>
+
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Euan's Printing">
+  <meta name="application-name" content="Euan's Printing">
+  <meta name="theme-color" content="#1a1a1a">
+  <meta name="description" content="Euan's Art and Printing Shop — full-sublimation jerseys, shirts, uniforms, DTF, mug & tarpaulin printing, heat press, and tailoring. Patnongon & Sibalom, Antique.">
+
+  <meta name="msapplication-TileImage" content="icon-192.png">
+  <meta name="msapplication-TileColor" content="#1a1a1a">
+  <meta name="msapplication-tap-highlight" content="no">
+
+  <meta property="og:title"       content="Euan's Art and Printing Shop">
+  <meta property="og:description" content="Print · Heat Press · Tailoring. We customize your desired design.">
+  <meta property="og:type"        content="website">
+  <meta property="og:image"       content="icon-512.png">
+  <meta name="twitter:card"       content="summary">
+
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #1a1a1a; width: 100vw; height: 100vh; overflow: hidden;
+           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+
+    /* ── SPLASH ── */
+    #splash {
+      position: fixed; inset: 0;
+      background: radial-gradient(ellipse at center, #fff7d1 0%, #ffe89a 60%, #f6d24a 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      z-index: 999; transition: opacity 0.6s ease; padding: 24px;
+    }
+    #splash .logo-wrap { position: relative; width: 172px; height: 172px;
+      display: flex; align-items: center; justify-content: center; }
+    /* Outer ring — red */
+    #splash .logo-wrap::before { content:''; position:absolute; inset:-10px; border-radius:50%;
+      border:4px solid transparent; border-top-color:#e11414; border-right-color:#e11414;
+      animation: spin 2s linear infinite; }
+    /* Inner ring — black (reverse) */
+    #splash .logo-wrap::after { content:''; position:absolute; inset:-17px; border-radius:50%;
+      border:3px solid transparent; border-bottom-color:#1a1a1a; border-left-color:#1a1a1a;
+      animation: spin 3s linear infinite reverse; }
+    #splash img { width:150px; height:150px; border-radius:50%; object-fit:cover; background:#fff;
+      box-shadow: 0 0 0 4px #fff, 0 0 0 7px #e11414, 0 10px 40px rgba(0,0,0,0.35);
+      animation: pulse 2s ease-in-out infinite; }
+    #splash .logo-fallback { width:150px; height:150px; border-radius:50%;
+      background:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center;
+      box-shadow: 0 0 0 4px #fff, 0 0 0 7px #e11414, 0 10px 40px rgba(0,0,0,0.35);
+      animation: pulse 2s ease-in-out infinite; }
+    #splash .logo-fallback .mark { font-family:'Georgia',serif; font-weight:900; font-size:58px; line-height:1; }
+    #splash .logo-fallback .mark .e { color:#1a1a1a; } #splash .logo-fallback .mark .a { color:#e11414; }
+    #splash .app-name { color:#1a1a1a; font-family:'Georgia','Times New Roman',serif; font-size:27px;
+      font-weight:900; margin-top:30px; letter-spacing:0.3px; text-align:center; }
+    #splash .app-name b { color:#e11414; }
+    #splash .app-sub { color:rgba(26,26,26,0.6); font-size:12px; font-weight:600; margin-top:6px;
+      letter-spacing:3px; text-transform:uppercase; }
+    #splash .app-tagline { color:#e11414; font-size:11px; font-weight:700; margin-top:6px; letter-spacing:0.4px; }
+    #splash .loading-bar-wrap { margin-top:38px; width:180px; height:4px; background:rgba(26,26,26,0.14);
+      border-radius:4px; overflow:hidden; }
+    #splash .loading-bar { height:100%; width:0%; background:linear-gradient(90deg,#1a1a1a,#e11414);
+      border-radius:4px; animation: loadbar 4s ease-in-out forwards; box-shadow:0 0 8px rgba(225,20,20,0.6); }
+
+    #openBtn, #setupMsg { display:none; }
+    #openBtn { margin-top:26px; background:#e11414; color:#fff; border:none; border-radius:100px;
+      padding:13px 26px; font-size:14px; font-weight:700; cursor:pointer;
+      box-shadow:0 6px 20px rgba(225,20,20,0.4); text-decoration:none; }
+    #splash .hint { color:rgba(26,26,26,0.55); font-size:11px; margin-top:12px; }
+    #setupMsg { color:#1a1a1a; max-width:340px; text-align:center; margin-top:22px; line-height:1.6; }
+    #setupMsg b { color:#e11414; }
+    #setupMsg code { background:rgba(26,26,26,0.1); padding:2px 6px; border-radius:5px; font-size:11px; word-break:break-all; }
+
+    @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes loadbar { 0%{width:0%} 40%{width:60%} 80%{width:85%} 100%{width:100%} }
+
+    #app-frame { position: fixed; inset: 0; width:100%; height:100%; border:none; z-index:1; background:#fff7d1; }
+
+    #installBanner { display:none; position:fixed; bottom:20px; left:12px; right:12px; z-index:998;
+      background:#fff; border-radius:16px; box-shadow:0 4px 24px rgba(0,0,0,0.18);
+      border:1.5px solid #f0e6b8; padding:14px 16px; align-items:center; gap:12px; }
+    #installBanner img { width:44px; height:44px; border-radius:12px; flex-shrink:0; }
+    #installBanner .ib-text { flex:1; min-width:0; }
+    #installBanner .ib-title { font-weight:800; font-size:14px; color:#1a1a1a; }
+    #installBanner .ib-sub { font-size:12px; color:#8a8270; margin-top:2px; }
+    #installBanner .ib-install { background:#e11414; color:#fff; border:none; border-radius:10px;
+      padding:9px 16px; font-size:12px; font-weight:700; cursor:pointer; white-space:nowrap; flex-shrink:0; }
+    #installBanner .ib-close { background:none; border:none; color:#8a8270; font-size:20px; cursor:pointer;
+      padding:4px; flex-shrink:0; line-height:1; }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SET YOUR APP URL HERE  ▼▼▼
+       Paste Euan's deployed Apps Script Web App URL (must end in /exec).
+       Deploy ▸ New deployment ▸ Web app ▸ Who has access: "Anyone" ▸ copy URL.
+       ═══════════════════════════════════════════════════════════════ -->
+  <script>
+    var APP_URL = "https://script.google.com/macros/s/REPLACE_WITH_YOUR_WEB_APP_ID/exec";
+  </script>
+
+  <div id="splash">
+    <div class="logo-wrap">
+      <img src="icon-192.png" alt="Euan's Art and Printing Shop"
+           onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';">
+      <div class="logo-fallback" id="logo-fallback" style="display:none;">
+        <div class="mark"><span class="e">e</span><span class="a">a</span></div>
+      </div>
+    </div>
+    <div class="app-name">Euan's <b>Art and Printing</b></div>
+    <div class="app-sub">Shop</div>
+    <div class="app-tagline">Print · Heat Press · Tailoring</div>
+    <div class="loading-bar-wrap" id="loadbarWrap"><div class="loading-bar"></div></div>
+
+    <a id="openBtn" href="#" target="_blank" rel="noopener">Open the Shop  &rarr;</a>
+    <div class="hint" id="openHint" style="display:none;">Taking a while? Tap the button above.</div>
+
+    <div id="setupMsg">
+      <b>Almost there!</b><br>
+      Open <code>index.html</code> and replace the placeholder <code>APP_URL</code>
+      with your Apps Script Web App URL ending in <code>/exec</code>, then re-upload to GitHub.
+    </div>
+  </div>
+
+  <iframe id="app-frame" allow="fullscreen; clipboard-write" allowfullscreen></iframe>
+
+  <div id="installBanner">
+    <img src="icon-192.png" alt="Euan's">
+    <div class="ib-text">
+      <div class="ib-title">Add to Home Screen</div>
+      <div class="ib-sub">Install Euan's Printing for quick access</div>
+    </div>
+    <button class="ib-install" onclick="triggerInstall()">Install</button>
+    <button class="ib-close"   onclick="dismissInstall()">✕</button>
+  </div>
+
+  <script>
+    var splash=document.getElementById('splash'), frame=document.getElementById('app-frame'),
+        openBtn=document.getElementById('openBtn'), openHint=document.getElementById('openHint'),
+        setupMsg=document.getElementById('setupMsg');
+    var notConfigured = APP_URL.indexOf('REPLACE_WITH_YOUR_WEB_APP_ID') !== -1;
+    function hideSplash(){ splash.style.opacity='0'; setTimeout(function(){ splash.style.display='none'; },600); }
+
+    if (notConfigured) {
+      document.getElementById('loadbarWrap').style.display='none';
+      setupMsg.style.display='block';
+    } else {
+      frame.src = APP_URL; openBtn.href = APP_URL;
+      frame.onload = function(){ setTimeout(hideSplash, 800); };
+      setTimeout(hideSplash, 6000);
+      setTimeout(function(){ openBtn.style.display='inline-block'; openHint.style.display='block'; }, 4500);
+    }
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(e){console.warn('SW failed',e);}); });
+    }
+    var deferredPrompt;
+    window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); deferredPrompt=e;
+      document.getElementById('installBanner').style.display='flex'; });
+    window.addEventListener('appinstalled', function(){ document.getElementById('installBanner').style.display='none'; deferredPrompt=null; });
+    function triggerInstall(){ if(!deferredPrompt) return; deferredPrompt.prompt(); deferredPrompt.userChoice.then(function(){ deferredPrompt=null; }); }
+    function dismissInstall(){ document.getElementById('installBanner').style.display='none'; }
+  </script>
+</body>
+</html>
